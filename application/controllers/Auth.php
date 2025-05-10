@@ -66,7 +66,7 @@ class Auth extends CI_Controller
                 $this->session->set_userdata('admin_id', $user['user_id']);
                 redirect('admin/dashboard');
             } else {
-                echo "Invalid admin credentials.";
+                echo "alert(Invalid admin credentials.);";
             }
         }
         $this->load->view('auth/admin_login');
@@ -83,7 +83,8 @@ class Auth extends CI_Controller
                 $this->session->set_userdata('user_id', $user['user_id']);
                 redirect('user/dashboard');
             } else {
-                echo "Invalid email or password.";
+                echo "<script>alert('Invalid email or password.');</script>";
+
             }
         }
         $this->load->view('auth/user_login');
