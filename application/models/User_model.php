@@ -32,7 +32,9 @@ class User_model extends CI_Model
         $query = $this->db->get('users');
         return $query->result_array();  // Return all users
     }
-
+    public function get_user($user_id) {
+        return $this->db->get_where('users', ['id' => $user_id])->row_array();
+    }
     // Delete a user by user_id
     public function delete_user($user_id)
     {
@@ -44,10 +46,11 @@ class User_model extends CI_Model
     public function update_user($user_id, $data)
     {
         // Update user details in 'users' table based on user_id
-        $this->db->where('user_id', $user_id);
+        $this->db->where('id', $user_id);
         return $this->db->update('users', $data);
     }
 
+    
     // Check if email already exists (for registration or password reset)
     public function email_exists($email)
     {

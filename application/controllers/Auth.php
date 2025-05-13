@@ -20,6 +20,7 @@ class Auth extends CI_Controller
             $email = $this->input->post('email');
             $password_raw = $this->input->post('password');
             $confirm_password = $this->input->post('confirm_password');
+            $role = $this->input->post('role'); // <-- capture selected role from form
 
             if ($password_raw !== $confirm_password) {
                 echo "Passwords do not match!";
@@ -33,44 +34,47 @@ class Auth extends CI_Controller
                 'username' => $username,
                 'email' => $email,
                 'password' => $password,
-                'role' => 'User',
+                'role' => $role,
                 'status' => 'Active',
                 'created_at' => date('Y-m-d H:i:s')  // Adding created_at field
             ];
 
-            // Insert data into database using model
-            $result = $this->User_model->register($data);
+            // ✅ Fix here: assign insert result to $result
+            $result = $this->db->insert('users', $data);
 
-            // Debug: Check if the insert was successful
+           // Debug: Check if the insert was successful
             if ($result) {
-                log_message('debug', 'User registration successful');
-                redirect('auth/user_login'); // Redirect to login page after successful registration
+            log_message('debug', 'User registration successful');
+            // Redirect based on role
+            if ($role == 'Admin') {
+                redirect('auth/admin_login');
             } else {
-                log_message('error', 'User registration failed');
-                echo "Something went wrong, please try again!";
+                redirect('auth/user_login');
             }
+        } else {
+            log_message('error', 'User registration failed');
+            echo "<script>alert('Something went wrong, please try again!');</script>";
         }
-
-        $this->load->view('auth/register');
     }
+    // Load the register form
+    $this->load->view('auth/register');
+}
 
+    public function admin_login() {
+    if ($this->input->post()) {
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
 
-    public function admin_login()
-    {
-        if ($this->input->post()) {
-            $email = $this->input->post('email');
-            $password = $this->input->post('password');
-            $user = $this->User_model->login($email);
-
-            if ($user && $user['role'] == 'Admin' && password_verify($password, $user['password'])) {
-                $this->session->set_userdata('admin_id', $user['user_id']);
-                redirect('admin/dashboard');
-            } else {
-                echo "alert(Invalid admin credentials.);";
-            }
+        // Replace this with your actual admin check logic
+        if ($username === 'admin' && $password === 'admin123') {
+            $this->session->set_userdata('admin_logged_in', true);
+            redirect('admin/dashboard');
+        } else {
+            $data['error'] = 'Invalid credentials';
         }
-        $this->load->view('auth/admin_login');
     }
+    $this->load->view('auth/admin_login');
+}
 
     public function user_login()
     {

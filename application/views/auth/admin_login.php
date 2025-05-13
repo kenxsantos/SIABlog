@@ -64,14 +64,14 @@
                     <img src="<?= base_url('assets/img/logo.jpg') ?>" alt="Logo">
                 </div>
                 <h3 class="text-center fw-bold">Admin Login</h3>
-                <form method="post" action="<?= base_url('auth/user_login') ?>">
+                <form method="post" action="<?= base_url('auth/admin_login') ?>">
                     <div class="form-group mb-2">
-                        <label>Username</label>
-                        <input type="text" name="username" class="form-control" required>
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group mb-2">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
                     </div>
                     <div class="d-flex justify-content-between mb-3">
                         <a href="#">Forgot Password?</a>

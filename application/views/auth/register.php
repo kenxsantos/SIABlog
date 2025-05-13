@@ -93,7 +93,7 @@
             <form method="post" action="<?= base_url('index.php/auth/register') ?>">
                 <div class="form-group mb-2">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" class="form-control" required />
+                    <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required />
                 </div>
                 <div class="form-group mb-3">
                     <label for="email">Email</label>
@@ -102,12 +102,18 @@
                 </div>
                 <div class="form-group mb-2">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required />
+                    <input type="password" name="password" id="password" class="form-control" placeholder="********" required />
                 </div>
                 <div class="form-group mb-3">
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" required />
+                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" required />
                 </div>
+                <!-- Inside your register.php -->
+                <select name="role" class="form-select" required>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+                </select>
+
                 <button class="btn btn-register" type="submit">Register</button>
                 <div class="text-center mt-2">
                     <a href="<?= site_url('auth/user_login'); ?>">I already have an account</a>
