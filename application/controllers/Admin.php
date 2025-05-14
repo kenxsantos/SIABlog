@@ -1,50 +1,60 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Admin extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        $this->load->model(['User_model', 'Post_model']);
+        $this->load->model(['User_model', 'Post_model', 'Tag_model']);
         $this->load->library('session');
         $this->load->database();
         $this->load->helper('url');
     }
 
     // Admin Dashboard
-    public function dashboard() {
+
+
+    public function dashboard()
+    {
         if (!$this->session->userdata('admin_logged_in')) {
             redirect('auth/admin_login');
         }
-    
-        // Load admin dashboard view
-        $this->load->view('admin/dashboard');
+        $user_id = $this->session->userdata('admin_logged_in');
+
+        $data['posts'] = $this->Post_model->get_all_posts();
+        $data['user'] = $this->User_model->get_user_by_id($user_id);
+        $this->load->view('admin/dashboard', $data);
     }
 
     // Show all users (excluding Admins)
-    public function users() {
-        if (!$this->session->userdata('admin_id')) {
+    public function users()
+    {
+        if (!$this->session->userdata('admin_logged_in')) {
             redirect('auth/admin_login');
         }
-
-        $data['users'] = $this->User_model->get_all_users(); // Load users from model
+        $data['users'] = $this->User_model->get_all_users();
+        $data['posts'] = $this->Post_model->get_all_posts();
         $this->load->view('admin/users', $data);
     }
 
     // View a single user's posts
-    public function view_user_posts($user_id) {
-        if (!$this->session->userdata('admin_id')) {
+    public function view_user_posts($user_id)
+    {
+        if (!$this->session->userdata('admin_logged_in')) {
             redirect('auth/admin_login');
         }
 
-        $data['posts'] = $this->Post_model->get_posts_by_user($user_id);
-        $data['user'] = $this->User_model->get_user($user_id);
-        $this->load->view('admin/user_posts', $data);
+        $data['posts'] = $this->Post_model->get_user_posts($user_id);
+        $data['user'] = $this->User_model->get_user_by_id($user_id);
+        $this->load->view('admin/view_user_post', $data);
     }
 
     // Edit user (stub, for later expansion)
-    public function edit_user($user_id) {
-        if (!$this->session->userdata('admin_id')) {
+    public function edit_user($user_id)
+    {
+        if (!$this->session->userdata('admin_logged_in')) {
             redirect('auth/admin_login');
         }
 
@@ -53,8 +63,9 @@ class Admin extends CI_Controller {
     }
 
     // Delete user
-    public function delete_user($user_id) {
-        if (!$this->session->userdata('admin_id')) {
+    public function delete_user($user_id)
+    {
+        if (!$this->session->userdata('admin_logged_in')) {
             redirect('auth/admin_login');
         }
 
@@ -63,8 +74,9 @@ class Admin extends CI_Controller {
     }
 
     // Delete post
-    public function delete_post($post_id) {
-        if (!$this->session->userdata('admin_id')) {
+    public function delete_post($post_id)
+    {
+        if (!$this->session->userdata('admin_logged_in')) {
             redirect('auth/admin_login');
         }
 
