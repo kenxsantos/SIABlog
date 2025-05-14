@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -62,6 +62,6 @@ $route['admin/view_user_posts/(:num)'] = 'admin/view_user_posts/$1';
 $route['admin/edit_user/(:num)'] = 'admin/edit_user/$1';
 $route['admin/delete_user/(:num)'] = 'admin/delete_user/$1';
 $route['user/dashboard'] = 'user/dashboard';
+$route['user/explore'] = 'user/explore';
 $route['user/edit_post/(:num)'] = 'user/edit_post/$1';
 $route['user/delete_post/(:num)'] = 'user/delete_post/$1';
-
