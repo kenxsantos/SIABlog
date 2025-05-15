@@ -21,7 +21,16 @@ class Tag_model extends CI_Model
     //         ->get_where('tags', ['id' => $user_id])
     //         ->result_array();
     // }
+    public function get_tag_name_by_id($id)
+    {
+        $this->db->select('name');
+        $this->db->from('tags');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $result = $query->row_array();
 
+        return $result ? $result['name'] : null;
+    }
 
 
     public function get_tag_by_id($id)
