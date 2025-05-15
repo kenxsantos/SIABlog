@@ -18,79 +18,118 @@ class User extends CI_Controller
 
     public function dashboard()
     {
+        if (!$this->session->userdata('user_id')) {
+            redirect('auth/user_login');
+        }
         $user_id = $this->session->userdata('user_id');
-
+        $tag_id = $this->input->post('tag_id');
         if ($this->input->post()) {
             $content = $this->input->post('content');
-            $tag_id = $this->input->post('tag_id'); // Single tag selected
-
             $this->Post_model->create_post([
                 'user_id' => $user_id,
                 'content' => $content,
-                'tag_id' => $tag_id, // Store only the selected tag ID
+                'tag_id' => $tag_id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 
             redirect('user/dashboard');
         }
-
-        $data['posts'] = $this->Post_model->get_user_posts($user_id);
+        $data['users'] = $this->User_model->get_all_users();
+        $data['posts'] = $this->Post_model->get_all_posts();
         $data['tags'] = $this->Tag_model->get_all_tags();
+
         $this->load->view('user/dashboard', $data);
     }
-
-
-    // Show a single user
-    public function show($user_id)
+    public function edit_post($post_id)
     {
-        $data['user'] = $this->User_model->get_user_by_id($user_id);
-        if (!$data['user']) {
+        $user_id = $this->session->userdata('user_id');
+        $post = $this->Post_model->get_post_by_id($post_id);
+
+        if (!$post) {
             show_404();
         }
-        $this->load->view('users/show', $data);
+
+        if ($this->input->post()) {
+            $content = $this->input->post('content');
+            $tag_id = $this->input->post('tag_id');
+            $this->Post_model->edit_post($post_id, $user_id, $tag_id, $content);
+            redirect('user/dashboard');
+        }
+
+        $data['post'] = $post;
+        $data['tags'] = $this->Tag_model->get_all_tags();
+        $this->load->view('user/edit_post', $data);
     }
 
-    public function login($email)
+
+    public function explore()
     {
-        $query = $this->db->get_where('users', ['email' => $email]);
-        return $query->row_array(); // ✅ important: return as array
+        $user_id = $this->session->userdata('user_id');
+        $data['posts'] = $this->Post_model->get_user_posts($user_id);
+        $this->load->view('user/explore', $data);
     }
 
-
-    // Logout
-    public function logout()
+    public function info()
     {
-        $this->session->sess_destroy();
-        redirect('user/login');
+        $this->load->view('user/info');
     }
+
+
+    public function delete_post($post_id)
+    {
+        $user_id = $this->session->userdata('user_id');
+        $this->Post_model->delete_post($post_id, $user_id);
+        redirect('user/dashboard');
+    }
+
+    public function edit_profile()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        if (!$user_id) {
+            redirect('auth/user_login');
+            return;
+        }
+
+        $data['user'] = $this->User_model->get_user_by_id($user_id);
+        $this->load->view('user/update_profile', $data); // create or use this view
+    }
+
 
     public function update_profile()
     {
-        $this->load->library('session');
-        $this->load->model('User_model');
-
         $user_id = $this->session->userdata('user_id');
+
+        if (!$user_id) {
+            redirect('auth/user_login');
+            return;
+        }
 
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $confirm_password = $this->input->post('confirm_password');
 
-        if ($password && $password === $confirm_password) {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $this->User_model->update_user($user_id, [
-                'username' => $username,
-                'password' => $hashed_password
-            ]);
-        } else {
-            $this->User_model->update_user($user_id, ['username' => $username]);
+        $update_data = ['username' => $username];
+
+        if (!empty($password)) {
+            if ($password === $confirm_password) {
+                $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
+            } else {
+                $this->session->set_flashdata('error', 'Passwords do not match');
+                redirect('user/edit_profile');
+                return;
+            }
         }
 
-        redirect('user/dashboard');
+        $this->User_model->update_user($user_id, $update_data);
+        $this->session->set_flashdata('success', 'Profile updated successfully');
+        redirect('user/edit_profile');
     }
-    // Delete user
-    public function delete($user_id)
+
+
+    public function logout()
     {
-        $this->User_model->delete_user($user_id);
-        redirect('user/index');
+        $this->session->sess_destroy();
+        redirect('auth/user_login');
     }
 }

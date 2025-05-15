@@ -87,6 +87,6 @@ class Post extends CI_Controller
     public function delete($post_id, $user_id)
     {
         $this->Post_model->delete_post($post_id, $user_id);
-        redirect('post/user_posts/' . $user_id);
+        redirect('user/user_posts/' . $user_id);
     }
 }
