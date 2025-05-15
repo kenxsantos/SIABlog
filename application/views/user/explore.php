@@ -11,6 +11,12 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
+        .profile-icon img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
         .nav-bar {
             display: flex;
             justify-content: space-between;
@@ -30,21 +36,13 @@
             border-bottom: 2px solid #6f42c1;
         }
 
-        .profile-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: black;
-        }
 
-        .logo {
-            background-color: #d6cfc1;
-            width: 60px;
-            height: 60px;
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
             border-radius: 50%;
-            text-align: center;
-            line-height: 60px;
-            font-weight: bold;
+
         }
 
         .post-box {
@@ -63,25 +61,19 @@
         }
 
         .hashtag {
-            margin-right: 0.5rem;
-            padding: 0.3rem 0.8rem;
+            padding: 5px 10px;
             border-radius: 8px;
             color: white;
             font-size: 0.8rem;
             font-weight: bold;
+            border-radius: 100px;
         }
+
 
         .hashtag:nth-child(1) {
-            background-color: #a58f72;
+            background-color: rgba(0, 248, 132, 0.77);
         }
 
-        .hashtag:nth-child(2) {
-            background-color: #d18863;
-        }
-
-        .hashtag:nth-child(3) {
-            background-color: #431a04;
-        }
 
         .like-icon {
             color: #a58f72;
@@ -95,13 +87,18 @@
 
     <!-- Navigation Bar -->
     <div class="nav-bar">
-        <div class="logo">Logo</div>
+        <img src="<?= base_url('assets/image/logo.png') ?>" alt="Logo" class="logo-img">
         <div>
-            <a href="<?= base_url('index.php/user/dashboard') ?>">POSTS</a>
-            <a href="#" class="active">EXPLORE</a>
+            <a href="<?= site_url('user/dashboard') ?>">POSTS</a>
+            <a href="<?= site_url('user/explore') ?>" class=" active">EXPLORE</a>
         </div>
-        <div class="profile-icon"></div>
+        <div class="profile-icon">
+            <a href="<?= base_url('index.php/user/edit_profile') ?>">
+                <img src="<?= base_url('assets/image/profile.png') ?>" alt="Profile">
+            </a>
+        </div>
     </div>
+
 
     <!-- Explore Posts Section -->
     <div class="container mt-4">
@@ -121,9 +118,7 @@
                     <!-- Hashtags & Like -->
                     <div class="d-flex justify-content-between">
                         <div>
-                            <span class="hashtag">Hashtag1</span>
-                            <span class="hashtag">Hashtag2</span>
-                            <span class="hashtag">Hashtag3</span>
+                            <span class="hashtag"><?= htmlspecialchars($post['tag_name']) ?></span>
                         </div>
                         <div>
                             <span class="like-icon">♥</span>
