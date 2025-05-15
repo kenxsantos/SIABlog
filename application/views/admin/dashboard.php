@@ -50,25 +50,18 @@
     }
 
     .hashtag {
-        margin-right: 0.5rem;
-        padding: 0.3rem 0.8rem;
+        padding: 5px 10px;
         border-radius: 8px;
         color: white;
         font-size: 0.8rem;
         font-weight: bold;
+        border-radius: 100px;
     }
 
     .hashtag:nth-child(1) {
-        background-color: #a58f72;
+        background-color: rgba(0, 248, 132, 0.77);
     }
 
-    .hashtag:nth-child(2) {
-        background-color: #d18863;
-    }
-
-    .hashtag:nth-child(3) {
-        background-color: #431a04;
-    }
 
     .like-icon {
         color: #a58f72;
@@ -146,12 +139,24 @@
             <div class="custom-actions">
                 <button class="menu-toggle" onclick="toggleMenu(this)">⋯</button>
                 <div class="action-menu">
-                    <a href="<?= base_url('user/edit_post/' . $post['post_id']) ?>" class="action-button edit-btn">Edit
+                    <a href="<?= base_url('index.php/admin/edit_post/' . $post['post_id']) ?>"
+                        class="action-button edit-btn">Edit
                         Post</a>
                     <a href="javascript:void(0);" class="action-button delete-btn"
-                        onclick="showDeleteModal('<?= base_url('user/delete_post/' . $post['post_id']) ?>')">Delete
+                        onclick="showDeleteModal('<?= base_url('index.php/admin/delete_post/' . $post['post_id']) ?>')">Delete
                         Post</a>
                 </div>
+            </div>
+
+            <div id="deleteModal" class="position-fixed top-50 start-50 translate-middle text-white p-4 rounded-3"
+                style="z-index: 1050; display: none; width: 400px; text-align: center; background-color: #8b3b29;">
+                <p class="mb-3 fw-bold">Are you sure you want to delete this post?</p>
+                <button onclick="hideDeleteModal()" class="btn btn-sm btn-secondary me-2">Cancel</button>
+                <button id="confirmDeleteBtn" class="btn btn-sm btn-dark">Yes</button>
+            </div>
+
+            <div>
+                <strong>@<?= htmlspecialchars($post['username']) ?></strong>
             </div>
 
             <div class="d-flex justify-content-between mb-2">
@@ -161,7 +166,7 @@
 
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <small class="text-muted ms-2"> <?= htmlspecialchars($post['tag_id']) ?></small>
+                    <span class="hashtag"><?= htmlspecialchars($post['tag_name']) ?></span>
                 </div>
                 <div>
                     <span class="like-icon">♥</span>
@@ -171,52 +176,11 @@
         <?php endforeach; ?>
     </div>
     <!-- Profile Section -->
-    <div class="container mt-5" style="max-width: 700px;">
-        <div class="bg-light p-4 rounded-4 border position-relative" style="background-color: #f4ede4;">
 
-            <!-- Profile Top Info -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h5 class="fw-bold">USERNAME</h5>
-                    <p class="text-muted mb-0">Add Bio……..</p>
-                </div>
-                <div class="rounded-circle bg-dark d-flex justify-content-center align-items-center"
-                    style="width: 80px; height: 80px;">
-                    <span class="text-white fs-2">👤</span>
-                </div>
-            </div>
-
-            <!-- Profile Edit Form -->
-            <form method="post" action="<?= base_url('user/update_profile') ?>">
-                <div class="p-3 rounded-3 border mb-3" style="background-color: #fdfaf6;">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">USERNAME</label>
-                        <input type="text" name="username" class="form-control"
-                            value="<?= htmlspecialchars($user['username']) ?>" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">PASSWORD</label>
-                        <input type="password" name="password" class="form-control" placeholder="**********">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">CONFIRM PASSWORD</label>
-                        <input type="password" name="confirm_password" class="form-control" placeholder="**********">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-dark px-4 py-1">SAVE CHANGES</button>
-            </form>
-
-            <!-- Logout Button -->
-            <form method="post" action="<?= base_url('auth/logout') ?>" class="text-center mt-4">
-                <button type="submit" class="btn btn-dark rounded-pill px-5 py-2">LOGOUT</button>
-            </form>
-        </div>
-    </div>
 
     <script>
+    let currentDeleteUrl = "";
+
     function toggleMenu(button) {
         const menu = button.nextElementSibling;
         const isVisible = menu.style.display === 'block';
@@ -230,6 +194,22 @@
         const isMenu = event.target.closest('.custom-actions');
         if (!isMenu) {
             document.querySelectorAll('.action-menu').forEach(m => m.style.display = 'none');
+        }
+    });
+
+    function showDeleteModal(url) {
+        currentDeleteUrl = url;
+        document.getElementById('deleteModal').style.display = 'block';
+    }
+
+    function hideDeleteModal() {
+        currentDeleteUrl = "";
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        if (currentDeleteUrl) {
+            window.location.href = currentDeleteUrl;
         }
     });
     </script>
