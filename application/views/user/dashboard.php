@@ -159,17 +159,26 @@
 
     <!-- Navigation Bar -->
     <div class="nav-bar">
-        <div class="logo">Logo</div>
-        <div>
-            <a href="#" class="active">POSTS</a>
-            <a href="<?= base_url('index.php/user/explore') ?>">EXPLORE</a>
-        </div>
-        <div class="profile-icon">
-            <a href="<?= base_url('index.php/user/edit_profile') ?>" style="display: block;">
-                <img src="<?= base_url('assets/images/user-icon.png') ?>" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%;">
-            </a>
-        </div>
+<!-- Logo -->
+    <div class="">
+        <a href="<?= base_url('index.php/user/dashboard') ?>">
+            <img src="<?= base_url('assets/img/logo.png') ?>" style="height: 40px;">
+        </a>
     </div>
+
+    <!-- Menu Links -->
+    <div>
+        <a href="#" class="active" style="margin-right: 15px;">POSTS</a>
+        <a href="<?= base_url('index.php/user/explore') ?>">EXPLORE</a>
+    </div>
+
+    <!-- Profile Icon -->
+    <div class="profile-icon" style="width: 40px; height: 40px;">
+        <a href="<?= base_url('index.php/user/edit_profile') ?>" style="display: block;">
+            <img src="<?= base_url('assets/img/icon_person.png') ?>" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+        </a>
+    </div>
+</div>
 
     <!-- Main Container -->
     <div class="container mt-4">

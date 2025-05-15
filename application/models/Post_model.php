@@ -15,14 +15,12 @@ class Post_model extends CI_Model {
         return $this->db->delete('posts', ['post_id' => $post_id, 'user_id' => $user_id]);
     }
 
-    // Get a single post
-    public function get_post_by_id($post_id) {
-    return $this->db->get_where('posts', ['post_id' => $post_id,])->row_array();
-}
-    // Update a post
-    public function edit_post($post_id, $user_id, $content) {
-        $this->db->where('post_id', $post_id);
-        $this->db->where('user_id', $user_id);
-        return $this->db->update('posts', ['content' => $content]);
+    public function get_post_by_id($id) {
+        return $this->db->get_where('posts', ['post_id' => $id])->row_array();
+    }
+    
+    public function update_post($id, $data) {
+        $this->db->where('post_id', $id);
+        return $this->db->update('posts', $data);
     }    
 }

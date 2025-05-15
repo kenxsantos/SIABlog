@@ -33,7 +33,7 @@ class User_model extends CI_Model
         return $query->result_array();  // Return all users
     }
     public function get_user($user_id) {
-        return $this->db->get_where('users', ['id' => $user_id])->row_array();
+        return $this->db->get_where('users', ['user_id' => $user_id])->row_array();
     }
     // Delete a user by user_id
     public function delete_user($user_id)
@@ -46,7 +46,7 @@ class User_model extends CI_Model
     public function update_user($user_id, $data)
     {
         // Update user details in 'users' table based on user_id
-        $this->db->where('id', $user_id);
+        $this->db->where('user_id', $user_id);
         return $this->db->update('users', $data);
     }
 
@@ -59,10 +59,8 @@ class User_model extends CI_Model
     }
 
     // Fetch user by user_id
-    public function get_user_by_id($user_id)
-    {
-        $query = $this->db->get_where('users', ['user_id' => $user_id]);
-        return $query->row_array();  // Returns single row based on user_id
+    public function get_user_by_id($user_id) {
+        return $this->db->get_where('users', ['user_id' => $user_id])->row_array();
     }
 
     // Change the user password
