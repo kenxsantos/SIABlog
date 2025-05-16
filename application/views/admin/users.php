@@ -143,6 +143,22 @@
             background: #000;
             color: white;
         }
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+
+        }
+        .btn-cancel {
+        background-color: #8c2f1b;
+        color: white;
+        font-weight: bold;
+        padding: 0.4rem 1.2rem;
+        border: none;
+        border-radius:10px;
+        margin-right: 0.5rem;
+    }
     </style>
 </head>
 
@@ -150,12 +166,19 @@
 
     <!-- Navbar -->
     <div class="nav-bar">
-        <div class="logo">Logo</div>
+    <img src="<?= base_url('assets/image/logo.png') ?>" alt="Logo" class="logo-img">
         <div>
-            <a href="<?= base_url('index.php/admin/dashboard') ?>">POSTS</a>
-            <a href="#" class="active">USERS</a>
+            <a href="<?= base_url('index.php/admin/dashboard') ?>" >POSTS</a>
+            <a href="<?= base_url('index.php/admin/users') ?>" class="active">USERS</a>
         </div>
-        <div><i class="bi bi-person-circle fs-4"></i></div>
+        <div>
+
+        <form method="post" action="<?= base_url('index.php/auth/logout') ?>" class="text-center mt-4">
+        <button  type="submit" class="btn-cancel"
+        onclick="window.location.href='<?= base_url('index.php/admin/dashboard') ?>'">Logout</button>
+            </form>
+       
+        </div>
     </div>
 
     <div class="container mt-4">
