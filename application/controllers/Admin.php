@@ -81,46 +81,46 @@ class Admin extends CI_Controller
         }
 
         $data['user'] = $this->User_model->get_user_by_id($user_id);
-        $this->load->view('admin/edit_profile', $data);
+        $this->load->view('admin/update_profile', $data);
     }
 
 
-    public function edit_user()
+    public function update_profile()
     {
-        if (!$this->session->userdata('admin_logged_in')) {
-            redirect('auth/admin_login');
+        $user_id = $this->session->userdata('user_id');
+    
+        if (!$user_id) {
+            $this->session->set_flashdata('error', 'You need to log in first.');
+            redirect('auth/user_login');
             return;
         }
-
-        $user_id = $this->input->post('user_id'); // Ensure user_id is posted
-
+    
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $confirm_password = $this->input->post('confirm_password');
-
+    
         $update_data = ['username' => $username];
-
+    
         if (!empty($password)) {
             if ($password === $confirm_password) {
                 $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
             } else {
                 $this->session->set_flashdata('error', 'Passwords do not match');
-                redirect('admin/show_edit_user/' . $user_id);
+                redirect('admin/update_profile'); // Redirecting after setting flashdata
                 return;
             }
         }
-
-        $this->User_model->update_user($user_id, $update_data);
-        $this->session->set_flashdata('success', 'Profile updated successfully');
-        $data['user'] = $this->User_model->get_user_by_id($user_id);
-        $this->load->view('admin/edit_profile', $data);
+    
+        if ($this->User_model->update_user($user_id, $update_data)) {
+            $this->session->set_flashdata('success', 'Profile updated successfully');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update profile.');
+        }
+    
         redirect('admin/users');
     }
+    
 
-
-
-
-    // Delete user
     public function delete_user($user_id)
     {
         if (!$this->session->userdata('admin_logged_in')) {
