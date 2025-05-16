@@ -54,16 +54,13 @@
             align-items: center;
         }
 
-        .logo {
-            width: 90px;
-            height: 90px;
-            background-color: #ccc;
+        .logo .logo-image {
+            width: 150px;
+            height: 150px;
+
+            object-fit: cover;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-weight: bold;
+
         }
 
         form {
@@ -83,17 +80,18 @@
 <body>
     <div class="register-container">
         <div class="register-left">
-            <img src="<?= base_url('assets/img/bg1.jpg') ?>" alt="Registration Visual" class="register-image" />
+            <img src="<?= base_url('assets/image/bg_1.jpg') ?>" alt="Registration Visual" class="register-image" />
         </div>
         <div class="register-right">
             <div class="logo">
-                <img src="<?= base_url('assets/img/logo.jpg') ?>" alt=" Logo" class="logo-image" />
+                <img src="<?= base_url('assets/image/logo.png') ?>" alt=" Logo" class="logo-image" />
             </div>
             <h3 class="fw-bold mb-3">Register</h3>
             <form method="post" action="<?= base_url('index.php/auth/register') ?>">
                 <div class="form-group mb-2">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required />
+                    <input type="text" name="username" id="username" class="form-control"
+                        placeholder="Enter your username" required />
                 </div>
                 <div class="form-group mb-3">
                     <label for="email">Email</label>
@@ -102,17 +100,15 @@
                 </div>
                 <div class="form-group mb-2">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="********" required />
+                    <input type="password" name="password" id="password" class="form-control" placeholder="********"
+                        required />
                 </div>
                 <div class="form-group mb-3">
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" required />
+                    <input type="password" name="confirm_password" id="confirm_password" class="form-control"
+                        placeholder="********" required />
                 </div>
                 <!-- Inside your register.php -->
-                <select name="role" class="form-select" required>
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-                </select>
 
                 <button class="btn btn-register" type="submit">Register</button>
                 <div class="text-center mt-2">
