@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -52,6 +52,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['auth/register'] = 'auth/register';  // Route for registration
-$route['auth/user_login'] = 'auth/user_login';  // Route for user login
-$route['auth/admin_login'] = 'auth/admin_login';  // Route for admin login
+$route['register'] = 'auth/register';
+$route['auth/register'] = 'auth/register';
+$route['auth/user_login'] = 'auth/user_login';
+$route['auth/admin_login'] = 'auth/admin_login';
+$route['admin/dashboard'] = 'admin/dashboard';
+$route['admin/users'] = 'admin/users';
+$route['admin/edit_profile'] = 'admin/edit_profile';
+$route['admin/view_user_posts/(:num)'] = 'admin/view_user_posts/$1';
+$route['admin/edit_user/(:num)'] = 'admin/edit_user/$1';
+$route['admin/delete_user/(:num)'] = 'admin/delete_user/$1';
+$route['user/dashboard'] = 'user/dashboard';
+$route['user/explore'] = 'user/explore';
+$route['user/update_profile'] = 'user/update_profile';
+$route['user/edit_post/(:num)'] = 'user/edit_post/$1';
+$route['user/delete_post/(:num)'] = 'user/delete_post/$1';
+$route['user/edit_profile'] = 'user/edit_profile';
+$route['user/update_profile'] = 'user/update_profile';
+$route['user/logout'] = 'user/logout';
+$route['admin/logout'] = 'admin/logout';

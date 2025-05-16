@@ -143,22 +143,6 @@
             background: #000;
             color: white;
         }
-        .logo-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 50%;
-
-        }
-        .btn-cancel {
-        background-color: #8c2f1b;
-        color: white;
-        font-weight: bold;
-        padding: 0.4rem 1.2rem;
-        border: none;
-        border-radius:10px;
-        margin-right: 0.5rem;
-    }
     </style>
 </head>
 
@@ -166,95 +150,33 @@
 
     <!-- Navbar -->
     <div class="nav-bar">
-    <img src="<?= base_url('assets/image/logo.png') ?>" alt="Logo" class="logo-img">
+        <div class="logo">Logo</div>
         <div>
-            <a href="<?= base_url('index.php/admin/dashboard') ?>" >POSTS</a>
-            <a href="<?= base_url('index.php/admin/users') ?>" class="active">USERS</a>
+            <a href="<?= base_url('index.php/admin/dashboard') ?>">ALL POSTS</a>
+            <br>
+            <strong>@<?= $user['username'] ?></strong>
         </div>
-        <div>
-
-        <form method="post" action="<?= base_url('index.php/auth/logout') ?>" class="text-center mt-4">
-        <button  type="submit" class="btn-cancel"
-        onclick="window.location.href='<?= base_url('index.php/admin/dashboard') ?>'">Logout</button>
-            </form>
-       
-        </div>
+        <div><i class="bi bi-person-circle fs-4"></i></div>
     </div>
 
     <div class="container mt-4">
-        <h6 class="fw-bold mb-3">ALL USERS</h6>
+        <h6 class="fw-bold mb-3">ALL Posts</h6>
 
-        <?php foreach ($users as $user): ?>
+        <?php foreach ($posts as $post): ?>
             <div class="user-box">
                 <div class="user-info">
                     <i class="bi bi-person-circle"></i>
-                    <strong>@<?= $user['username'] ?></strong>
-                </div>
-                <div>
-                    <a href="<?= base_url('index.php/admin/view_user_posts/' . $user['user_id']) ?>" class="me-3">View All
-                        Post</a>
-
-                    <div class="custom-actions d-inline-block">
-                        <button class="menu-toggle" onclick="toggleUserMenu(this)">⋯</button>
-                        <div class="action-menu">
-                            <button class="edit"
-                                onclick="window.location.href='<?= base_url('index.php/admin/show_edit_user/' . $user['user_id']) ?>'">Edit
-                                User</button>
-
-                            <button class="delete"
-                                onclick="window.location.href='<?= base_url('index.php/admin/delete_user/' . $user['user_id']) ?>'">Delete
-                                User</button>
-                        </div>
-                    </div>
+                    <p><?= htmlspecialchars($post['content']) ?></p>
                 </div>
             </div>
         <?php endforeach; ?>
+
     </div>
 
-    <!-- Confirmation Modal -->
-    <div class="confirm-modal" id="confirmModal">
-        <p><strong>Are you sure you want to delete this user?</strong></p>
-        <div>
-            <button class="cancel" onclick="hideConfirmModal()">Cancel</button>
-            <button class="confirm" id="confirmDeleteBtn">Yes</button>
-        </div>
-    </div>
 
-    <script>
-        function toggleUserMenu(button) {
-            const menu = button.nextElementSibling;
-            const isVisible = menu.style.display === 'block';
-            document.querySelectorAll('.action-menu').forEach(m => m.style.display = 'none');
-            if (!isVisible) {
-                menu.style.display = 'block';
-            }
-        }
 
-        document.addEventListener('click', function(event) {
-            const isMenu = event.target.closest('.custom-actions');
-            if (!isMenu) {
-                document.querySelectorAll('.action-menu').forEach(m => m.style.display = 'none');
-            }
-        });
 
-        let userToDeleteId = null;
 
-        function showConfirmModal(userId) {
-            userToDeleteId = userId;
-            document.getElementById('confirmModal').style.display = 'block';
-        }
-
-        function hideConfirmModal() {
-            userToDeleteId = null;
-            document.getElementById('confirmModal').style.display = 'none';
-        }
-
-        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-            if (userToDeleteId !== null) {
-                window.location.href = `<?= base_url('admin/delete_user/') ?>${userToDeleteId}`;
-            }
-        });
-    </script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </body>

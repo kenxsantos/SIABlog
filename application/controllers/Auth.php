@@ -38,22 +38,26 @@ class Auth extends CI_Controller
                 'created_at' => date('Y-m-d H:i:s')  // Adding created_at field
             ];
 
-            // Insert data into database using model
-            $result = $this->User_model->register($data);
+            // ✅ Fix here: assign insert result to $result
+            $result = $this->db->insert('users', $data);
 
             // Debug: Check if the insert was successful
             if ($result) {
                 log_message('debug', 'User registration successful');
-                redirect('auth/user_login'); // Redirect to login page after successful registration
+                // Redirect based on role
+                if ($role == 'Admin') {
+                    redirect('auth/admin_login');
+                } else {
+                    redirect('auth/user_login');
+                }
             } else {
                 log_message('error', 'User registration failed');
-                echo "Something went wrong, please try again!";
+                echo "<script>alert('Something went wrong, please try again!');</script>";
             }
         }
-
+        // Load the register form
         $this->load->view('auth/register');
     }
-
 
     public function admin_login()
     {
@@ -63,14 +67,15 @@ class Auth extends CI_Controller
             $user = $this->User_model->login($email);
 
             if ($user && $user['role'] == 'Admin' && password_verify($password, $user['password'])) {
-                $this->session->set_userdata('admin_id', $user['user_id']);
+                $this->session->set_userdata('admin_logged_in', $user['user_id']);
                 redirect('admin/dashboard');
             } else {
-                echo "Invalid admin credentials.";
+                echo "<script>alert('Invalid email or password.');</script>";
             }
         }
         $this->load->view('auth/admin_login');
     }
+
 
     public function user_login()
     {
@@ -83,7 +88,7 @@ class Auth extends CI_Controller
                 $this->session->set_userdata('user_id', $user['user_id']);
                 redirect('user/dashboard');
             } else {
-                echo "Invalid email or password.";
+                echo "<script>alert('Invalid email or password.');</script>";
             }
         }
         $this->load->view('auth/user_login');
