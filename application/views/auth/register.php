@@ -28,11 +28,24 @@
         }
 
         .register-left {
-            flex: 1;
+            width: 50%;
             display: flex;
+            align-items: center;
             justify-content: center;
             padding-right: 20px;
+
         }
+
+        .register-image {
+            width: 100%;
+            /* Makes the image fill the parent container */
+            height: auto;
+            /* Maintains aspect ratio */
+            object-fit: contain;
+            /* Ensures the entire image is visible without being cropped */
+        }
+
+
 
         .image-placeholder {
             width: 100%;
@@ -47,6 +60,7 @@
         }
 
         .register-right {
+            width: 50%;
             flex: 1;
             padding-left: 20px;
             display: flex;
@@ -57,7 +71,6 @@
         .logo .logo-image {
             width: 150px;
             height: 150px;
-
             object-fit: cover;
             border-radius: 50%;
 
@@ -80,7 +93,7 @@
 <body>
     <div class="register-container">
         <div class="register-left">
-            <img src="<?= base_url('assets/image/bg_1.jpg') ?>" alt="Registration Visual" class="register-image" />
+            <img src="<?= base_url('assets/image/bg_2.jpg') ?>" alt="Registration Visual" class="register-image" />
         </div>
         <div class="register-right">
             <div class="logo">

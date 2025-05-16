@@ -128,7 +128,8 @@
             </div>
 
             <!-- Profile Edit Form -->
-            <form method="post" action="<?= base_url('index.php/admin/edit_user') ?>">
+            <form method="post" action="<?= base_url('index.php/admin/update_profile') ?>">
+
                 <div class="p-3 rounded-3 border mb-3" style="background-color: #fdfaf6;">
                     <div class="mb-3">
                         <label class="form-label fw-bold">USERNAME</label>
@@ -152,9 +153,9 @@
 
 
             <!-- Logout Button -->
-            <form method="post" action="<?= base_url('auth/logout') ?>" class="text-center mt-4">
+            <form method="post" action="<?= base_url('index.php/auth/logout') ?>" class="text-center mt-4">
                 <button type="button" class="btn-cancel"
-                    onclick="window.location.href='<?= base_url('index.php/admin/dashboard') ?>'">Cancel</button>
+                    onclick="window.location.href='<?= base_url('index.php/user/dashboard') ?>'">Cancel</button>
                 <button type="submit" class="btn btn-dark rounded-pill px-5 py-2">LOGOUT</button>
             </form>
         </div>

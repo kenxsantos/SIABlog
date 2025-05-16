@@ -99,41 +99,41 @@ class User extends CI_Controller
     public function update_profile()
     {
         $user_id = $this->session->userdata('user_id');
-
+    
         if (!$user_id) {
+            $this->session->set_flashdata('error', 'You need to log in first.');
             redirect('auth/user_login');
             return;
         }
-
+    
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $confirm_password = $this->input->post('confirm_password');
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        $confirm_password = $this->input->post('confirm_password');
-
+    
         $update_data = ['username' => $username];
-
+    
         if (!empty($password)) {
             if ($password === $confirm_password) {
                 $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
             } else {
                 $this->session->set_flashdata('error', 'Passwords do not match');
-                redirect('user/edit_profile');
+                redirect('user/update_profile'); // Redirecting after setting flashdata
                 return;
             }
         }
-
-        $this->User_model->update_user($user_id, $update_data);
-        $this->session->set_flashdata('success', 'Profile updated successfully');
-        redirect('user/edit_profile');
+    
+        if ($this->User_model->update_user($user_id, $update_data)) {
+            $this->session->set_flashdata('success', 'Profile updated successfully');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update profile.');
+        }
+    
+        redirect('user/dashboard');
     }
-
+    
 
     public function logout()
     {
-        $this->session->sess_destroy();
-        redirect('auth/user_login');
         $this->session->sess_destroy();
         redirect('auth/user_login');
     }

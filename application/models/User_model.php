@@ -24,10 +24,10 @@ class User_model extends CI_Model
 
     public function get_all_users()
     {
+        $this->db->where('role', 'User'); // Filter by role
         $query = $this->db->get('users');
         return $query->result_array();
     }
-
 
     public function delete_user($user_id)
     {

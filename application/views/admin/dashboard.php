@@ -115,6 +115,22 @@
         resize: none;
         background: #fff;
     }
+    .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+
+        }
+        .btn-cancel {
+        background-color: #8c2f1b;
+        color: white;
+        font-weight: bold;
+        padding: 0.4rem 1.2rem;
+        border: none;
+        border-radius:10px;
+        margin-right: 0.5rem;
+    }
     </style>
 </head>
 
@@ -122,12 +138,18 @@
 
     <!-- Navbar -->
     <div class="nav-bar">
-        <div class="logo">Logo</div>
+    <img src="<?= base_url('assets/image/logo.png') ?>" alt="Logo" class="logo-img">
         <div>
             <a href="#" class="active">POSTS</a>
             <a href="<?= base_url('index.php/admin/users') ?>">USERS</a>
         </div>
-        <div><i class=" bi bi-person-circle fs-4"></i>
+        <div>
+
+        <form method="post" action="<?= base_url('index.php/auth/logout') ?>" class="text-center mt-4">
+        <button  type="submit" class="btn-cancel"
+        onclick="window.location.href='<?= base_url('index.php/admin/dashboard') ?>'">Logout</button>
+            </form>
+       
         </div>
     </div>
 
@@ -160,8 +182,8 @@
             </div>
 
             <div class="d-flex justify-content-between mb-2">
-                <textarea readonly><?= htmlspecialchars($post['content']) ?></textarea>
-                <small class="text-muted ms-2">Date: <?= date('F j, Y', strtotime($post['created_at'])) ?></small>
+            <p class="form-control mb-2"><?= htmlspecialchars($post['content']) ?></p>
+               
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
