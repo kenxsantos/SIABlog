@@ -108,6 +108,9 @@ class User extends CI_Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $confirm_password = $this->input->post('confirm_password');
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+        $confirm_password = $this->input->post('confirm_password');
 
         $update_data = ['username' => $username];
 
@@ -129,6 +132,8 @@ class User extends CI_Controller
 
     public function logout()
     {
+        $this->session->sess_destroy();
+        redirect('auth/user_login');
         $this->session->sess_destroy();
         redirect('auth/user_login');
     }

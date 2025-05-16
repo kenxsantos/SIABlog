@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #eae0d5;
+            font-family: 'Segoe UI', sans-serif;
+        }
     <meta charset="UTF-8">
     <title>Edit Post</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +27,20 @@
             padding: 1rem;
             border-bottom: 1px solid #999;
         }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #999;
+        }
 
+        .nav-bar a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
         .nav-bar a {
             margin: 0 1rem;
             text-decoration: none;
@@ -29,7 +51,16 @@
         .nav-bar a.active {
             border-bottom: 2px solid #6f42c1;
         }
+        .nav-bar a.active {
+            border-bottom: 2px solid #6f42c1;
+        }
 
+        .profile-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: black;
+        }
         .profile-icon {
             width: 30px;
             height: 30px;
@@ -46,7 +77,22 @@
             line-height: 60px;
             font-weight: bold;
         }
+        .logo {
+            background-color: #d6cfc1;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-weight: bold;
+        }
 
+        .edit-form {
+            background: #f4ede4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #999;
+        }
         .edit-form {
             background: #f4ede4;
             padding: 1.5rem;
@@ -63,7 +109,25 @@
             border-radius: 10px;
             font-size: 0.9rem;
         }
+        .hashtag-btn {
+            background-color: #a58f72;
+            color: white;
+            font-weight: bold;
+            padding: 0.4rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
 
+        .btn-cancel {
+            background-color: #8c2f1b;
+            color: white;
+            font-weight: bold;
+            padding: 0.4rem 1.2rem;
+            border: none;
+            border-radius: 999px;
+            margin-right: 0.5rem;
+        }
         .btn-cancel {
             background-color: #8c2f1b;
             color: white;
@@ -110,8 +174,18 @@
     </style>
 </head>
 
+
 <body>
 
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <div class="logo">Logo</div>
+        <div>
+            <a href="#" class="active">POSTS</a>
+            <a href="#">EXPLORE</a>
+        </div>
+        <div class="profile-icon"></div>
+    </div>
     <!-- Navigation -->
     <div class="nav-bar">
         <div class="logo">Logo</div>
@@ -145,5 +219,6 @@
         </div>
     </div>
 </body>
+
 
 </html>
