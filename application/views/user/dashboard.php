@@ -225,8 +225,8 @@
                     <button onclick="hideDeleteModal()" class="btn btn-sm btn-secondary me-2">Cancel</button>
                     <button id="confirmDeleteBtn" class="btn btn-sm btn-dark">Yes</button>
                 </div>
-                <strong>@<?= htmlspecialchars($post['username']) ?></strong>
-                <p class="form-control mb-2"><?= htmlspecialchars($post['content']) ?></p>
+                <textarea class="form-control mb-2" readonly><?= htmlspecialchars($post['content']) ?></textarea>
+
                 <div class="d-flex justify-content-between">
                     <div>
                         <span class="hashtag"><?= htmlspecialchars($post['tag_name']) ?></span>
@@ -254,7 +254,7 @@
             }
         }
 
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             if (!event.target.closest('.custom-actions')) {
                 document.querySelectorAll('.action-menu').forEach(m => m.style.display = 'none');
             }
@@ -270,7 +270,7 @@
             document.getElementById('deleteModal').style.display = 'none';
         }
 
-        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
             if (currentDeleteUrl) {
                 window.location.href = currentDeleteUrl;
             }

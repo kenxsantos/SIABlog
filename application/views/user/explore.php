@@ -111,7 +111,7 @@
                     <div class="post-header mb-2">
                         <small class="text-muted"><?= date('F j, Y', strtotime($post['created_at'])) ?></small>
                     </div>
-
+                    <strong>@<?= htmlspecialchars($post['username']) ?></strong>
                     <!-- Post Content -->
                     <textarea class="form-control mb-2" readonly><?= htmlspecialchars($post['content']) ?></textarea>
 

@@ -34,10 +34,8 @@ class User extends CI_Controller
 
             redirect('user/dashboard');
         }
-        $data['users'] = $this->User_model->get_all_users();
-        $data['posts'] = $this->Post_model->get_all_posts();
+        $data['posts'] = $this->Post_model->get_user_posts($user_id);
         $data['tags'] = $this->Tag_model->get_all_tags();
-
         $this->load->view('user/dashboard', $data);
     }
     public function edit_post($post_id)
@@ -65,7 +63,9 @@ class User extends CI_Controller
     public function explore()
     {
         $user_id = $this->session->userdata('user_id');
-        $data['posts'] = $this->Post_model->get_user_posts($user_id);
+        $data['users'] = $this->User_model->get_all_users();
+        $data['posts'] = $this->Post_model->get_all_posts();
+        $data['tags'] = $this->Tag_model->get_all_tags();
         $this->load->view('user/explore', $data);
     }
 
@@ -99,19 +99,19 @@ class User extends CI_Controller
     public function update_profile()
     {
         $user_id = $this->session->userdata('user_id');
-    
+
         if (!$user_id) {
             $this->session->set_flashdata('error', 'You need to log in first.');
             redirect('auth/user_login');
             return;
         }
-    
+
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $confirm_password = $this->input->post('confirm_password');
-    
+
         $update_data = ['username' => $username];
-    
+
         if (!empty($password)) {
             if ($password === $confirm_password) {
                 $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
@@ -121,16 +121,16 @@ class User extends CI_Controller
                 return;
             }
         }
-    
+
         if ($this->User_model->update_user($user_id, $update_data)) {
             $this->session->set_flashdata('success', 'Profile updated successfully');
         } else {
             $this->session->set_flashdata('error', 'Failed to update profile.');
         }
-    
+
         redirect('user/dashboard');
     }
-    
+
 
     public function logout()
     {
